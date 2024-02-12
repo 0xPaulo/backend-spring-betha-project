@@ -29,7 +29,6 @@ public class ManutencaoController {
     return cadastroRepository.findAll();
   }
 
-  // @SuppressWarnings("null")
   @SuppressWarnings("null")
   @PostMapping
   public ResponseEntity<Cadastro> create(@RequestBody Cadastro cadastro) {

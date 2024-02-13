@@ -42,7 +42,12 @@ public class ManutencaoController {
   @ResponseStatus(code = HttpStatus.CREATED)
   public Cadastro create(@RequestBody Cadastro cadastro) {
     return cadastroRepository.save(cadastro);
+  }
 
+  @SuppressWarnings("null")
+  @PostMapping("/{id}")
+  public Cadastro editarItem(@PathVariable Long id, @RequestBody Cadastro cadastro) {
+    return cadastroRepository.save(cadastro);
   }
 
 }

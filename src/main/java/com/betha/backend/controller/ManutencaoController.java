@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,16 +39,30 @@ public class ManutencaoController {
   }
 
   @SuppressWarnings("null")
+  @DeleteMapping("/{id}")
+  public void deletar(@PathVariable Long id) {
+    this.cadastroRepository.deleteById(id);
+  }
+
+  @SuppressWarnings("null")
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
   public Cadastro create(@RequestBody Cadastro cadastro) {
     return cadastroRepository.save(cadastro);
   }
 
-  @SuppressWarnings("null")
   @PostMapping("/{id}")
   public Cadastro editarItem(@PathVariable Long id, @RequestBody Cadastro cadastro) {
-    return cadastroRepository.save(cadastro);
+    Optional<Cadastro> cadastroExistente = cadastroRepository.findById(id);
+    if (!cadastroExistente.isPresent()) {
+      System.out.println("Cadastro nao encontrado para o id: " + id);
+    }
+    Cadastro cadastroAtualizado = cadastroExistente.get();
+    cadastroAtualizado.setName(cadastro.getName());
+    cadastroAtualizado.setDefeito(cadastro.getDefeito());
+    // cadastroAtualizado.setId(cadastro.getId());
+
+    return cadastroRepository.save(cadastroAtualizado);
   }
 
 }

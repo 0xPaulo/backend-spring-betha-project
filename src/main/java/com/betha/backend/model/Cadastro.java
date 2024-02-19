@@ -26,17 +26,17 @@ public class Cadastro {
   @JsonProperty("_id")
   private Long id;
 
-  @Column(name = "Nome_Cliente", length = 200, nullable = false)
+  @Column(name = "Name", length = 200, nullable = false)
   private String name;
 
-  @Column(name = "Item", length = 200, nullable = false)
+  @Column(name = "item", length = 200, nullable = false)
   private String item;
 
-  @Column(name = "Defeito_item", nullable = false)
+  @Column(name = "Defeito", nullable = false)
   private String defeito;
 
-  @Column(name = "Data_Entrada")
   @DateTimeFormat(pattern = "dd/MM/yyyy")
+  @Column(name = "Data_Entrada")
   private LocalDate dataEntrada = LocalDate.now();
 
   @Column(name = "Data_Saida")
@@ -46,6 +46,9 @@ public class Cadastro {
   @Column(name = "Valor")
   private int valor;
 
+  @Column(name = "Descricao")
+  private String desc;
+  
   @Enumerated(EnumType.STRING)
   private com.betha.backend.Enum.Status status;
 }

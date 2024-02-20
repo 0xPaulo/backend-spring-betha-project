@@ -48,7 +48,10 @@ public class Cadastro {
 
   @Column(name = "Descricao")
   private String desc;
-  
+
   @Enumerated(EnumType.STRING)
   private com.betha.backend.Enum.Status status;
+
+  @Column(name = "Email")
+  private String email;
 }

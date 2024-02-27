@@ -1,5 +1,7 @@
 package com.betha.backend.service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +21,35 @@ public class CadastroService {
   }
 
   public Cadastro editarItem(Long id, Cadastro cadastro) {
-    Optional<Cadastro> cadastroExistente = cadastroRepository.findById(id);
+    Optional<Cadastro> cadastroExistenteOptional = cadastroRepository.findById(id);
 
-    if (!cadastroExistente.isPresent()) {
-      System.out.println("Cadastro nao encontrado pelo id: " + id);
-    }
+    return cadastroExistenteOptional.map(cadastroExistente -> {
+      Cadastro cadastroAtualizado = Cadastro.builder()
+          .id(cadastroExistente.getId())
+          .name(cadastro.getName())
+          .item(cadastro.getItem())
+          .defeito(cadastro.getDefeito())
+          .dataEntrada(cadastro.getDataEntrada())
+          .dataSaida(cadastro.getDataSaida())
+          .valor(cadastro.getValor())
+          .desc(cadastro.getDesc())
+          .status(cadastro.getStatus())
+          .email(cadastro.getEmail())
+          .build();
 
-    Cadastro cadastroAtualizado = Cadastro.builder()
+      return cadastroRepository.save(cadastroAtualizado);
+    }).orElseGet(() -> {
+      System.out.println("Cadastro não encontrado pelo ID: " + id);
+      return null;
+    });
+  }
+
+  public Cadastro createCadastro(Cadastro cadastro) {
+    Cadastro novoCadastro = Cadastro.builder()
         .name(cadastro.getName())
         .item(cadastro.getItem())
         .defeito(cadastro.getDefeito())
-        .dataEntrada(cadastro.getDataEntrada())
+        .dataEntrada(LocalDateTime.now().atZone(ZoneId.systemDefault()).toLocalDateTime())
         .dataSaida(cadastro.getDataSaida())
         .valor(cadastro.getValor())
         .desc(cadastro.getDesc())
@@ -37,7 +57,7 @@ public class CadastroService {
         .email(cadastro.getEmail())
         .build();
 
-    return cadastroAtualizado;
+    return cadastroRepository.save(novoCadastro);
   }
 
 }

@@ -27,7 +27,6 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter(value = AccessLevel.PACKAGE)
 @Getter
-
 @Table(name = "Cadastros")
 public class Cadastro {
 
@@ -64,5 +63,4 @@ public class Cadastro {
 
   @Column(name = "email")
   private String email;
-
 }

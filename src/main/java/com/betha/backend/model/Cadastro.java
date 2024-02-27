@@ -1,6 +1,6 @@
 package com.betha.backend.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,10 +14,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @Entity
+@Builder(toBuilder = true)
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Setter(value = AccessLevel.PACKAGE)
+@Getter
+
 @Table(name = "Cadastros")
 public class Cadastro {
 
@@ -26,32 +36,33 @@ public class Cadastro {
   @JsonProperty("_id")
   private Long id;
 
-  @Column(name = "Name", length = 200, nullable = false)
+  @Column(name = "name")
   private String name;
 
-  @Column(name = "item", length = 200, nullable = false)
+  @Column(name = "item")
   private String item;
 
-  @Column(name = "Defeito", nullable = false)
+  @Column(name = "defeito")
   private String defeito;
 
-  @DateTimeFormat(pattern = "dd/MM/yyyy")
-  @Column(name = "Data_Entrada")
-  private LocalDate dataEntrada = LocalDate.now();
+  @Column(name = "data_entrada")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private LocalDateTime dataEntrada;
 
-  @Column(name = "Data_Saida")
-  @DateTimeFormat(pattern = "dd/MM/yyyy")
-  private LocalDate dataSaida = LocalDate.now();
+  @Column(name = "data_saida")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private LocalDateTime dataSaida;
 
-  @Column(name = "Valor")
+  @Column(name = "valor")
   private int valor;
 
-  @Column(name = "Descricao")
+  @Column(name = "descricao")
   private String desc;
 
   @Enumerated(EnumType.STRING)
   private com.betha.backend.Enum.Status status;
 
-  @Column(name = "Email")
+  @Column(name = "email")
   private String email;
+
 }
